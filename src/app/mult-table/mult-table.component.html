@@ -1,0 +1,30 @@
+<div class="container">
+  <h1>Tabuada</h1>
+  <label for="numero">Informe o número:</label>
+  <input
+    type="number"
+    [(ngModel)]="numero"
+    id="numero"
+    (input)="gerarTabuada()"
+  />
+  <table *ngIf="tabuada.length > 0" class="table">
+    <thead>
+      <tr>
+        <th scope="col">Número</th>
+        <th scope="col">x</th>
+        <th scope="col">Multiplicador</th>
+        <th scope="col">=</th>
+        <th scope="col">Resultado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of tabuada">
+        <td>{{ item.numero }}</td>
+        <td>x</td>
+        <td>{{ item.multiplicador }}</td>
+        <td>=</td>
+        <td>{{ item.resultado }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
