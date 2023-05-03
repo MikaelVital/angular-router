@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
+import { TimerService } from '../timer.service';
 
 @Component({
   selector: 'app-home',
@@ -6,7 +8,29 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  constructor() {}
-  date: Date = new Date();
-  ngOnInit() {}
+  seconds: number = 0;
+  remainingTime$: Observable<number>;
+  countdownSub: Subscription;
+
+  constructor(private timerService: TimerService) {
+    this.remainingTime$ = timerService.getCountdown().asObservable();
+  }
+
+  ngOnInit(): void {
+    this.countdownSub = this.timerService.getCountdown().subscribe();
+  }
+
+  ngOnDestroy(): void {
+    if (this.countdownSub) {
+      this.countdownSub.unsubscribe();
+    }
+  }
+
+  startTimer(): void {
+    this.timerService.startTimer(this.seconds);
+  }
+
+  stopTimer(): void {
+    this.timerService.stopTimer();
+  }
 }

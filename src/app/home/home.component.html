@@ -1,4 +1,6 @@
-<h1>Aluno</h1>
-<p>Mikael Vital</p>
-<p>0050832111004</p>
-<p>Data: {{ date }}</p>
+<div class="timer-control">
+<input type="number" [(ngModel)]="seconds" placeholder="Digite os segundos" />
+<button (click)="startTimer()">Iniciar</button>
+<button (click)="stopTimer()">Parar</button>
+<p>Tempo restante: {{ remainingTime$ | async }} segundos</p>
+</div>
