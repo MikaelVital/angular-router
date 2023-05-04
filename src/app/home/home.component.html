@@ -1,6 +1,10 @@
 <div class="timer-control">
-<input type="number" [(ngModel)]="seconds" placeholder="Digite os segundos" />
-<button (click)="startTimer()">Iniciar</button>
-<button (click)="stopTimer()">Parar</button>
-<p>Tempo restante: {{ remainingTime$ | async }} segundos</p>
+  <input
+    type="number"
+    [(ngModel)]="intervalTime"
+    placeholder="Digite o tempo em milissegundos"
+  />
+  <button (click)="startTimer()">Iniciar</button>
+  <button (click)="stopTimer()">Parar</button>
+  <p>Contagem atual: {{ count$ | async }}</p>
 </div>

@@ -8,26 +8,26 @@ import { TimerService } from '../timer.service';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  seconds: number = 0;
-  remainingTime$: Observable<number>;
-  countdownSub: Subscription;
+  intervalTime: number = 1000;
+  count$: Observable<number>;
+  countSub: Subscription;
 
   constructor(private timerService: TimerService) {
-    this.remainingTime$ = timerService.getCountdown().asObservable();
+    this.count$ = timerService.getCount().asObservable();
   }
 
   ngOnInit(): void {
-    this.countdownSub = this.timerService.getCountdown().subscribe();
+    this.countSub = this.timerService.getCount().subscribe();
   }
 
   ngOnDestroy(): void {
-    if (this.countdownSub) {
-      this.countdownSub.unsubscribe();
+    if (this.countSub) {
+      this.countSub.unsubscribe();
     }
   }
 
   startTimer(): void {
-    this.timerService.startTimer(this.seconds);
+    this.timerService.startTimer(this.intervalTime);
   }
 
   stopTimer(): void {
