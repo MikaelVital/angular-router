@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { TimerService } from '../timer.service';
+import { TimerService, BitcoinPrice, BitcoinRate } from '../timer.service';
 
 @Component({
   selector: 'app-home',
@@ -8,29 +8,22 @@ import { TimerService } from '../timer.service';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  intervalTime: number = 1000;
-  count$: Observable<number>;
-  countSub: Subscription;
+  bitcoinRates$: Observable<BitcoinRate[]>;
+  ratesSub: Subscription;
 
   constructor(private timerService: TimerService) {
-    this.count$ = timerService.getCount().asObservable();
+    this.bitcoinRates$ = timerService.getBitcoinRates().asObservable();
   }
 
   ngOnInit(): void {
-    this.countSub = this.timerService.getCount().subscribe();
+    this.timerService.startTimer();
+    this.ratesSub = this.timerService.getBitcoinRates().subscribe();
   }
 
   ngOnDestroy(): void {
-    if (this.countSub) {
-      this.countSub.unsubscribe();
-    }
-  }
-
-  startTimer(): void {
-    this.timerService.startTimer(this.intervalTime);
-  }
-
-  stopTimer(): void {
     this.timerService.stopTimer();
+    if (this.ratesSub) {
+      this.ratesSub.unsubscribe();
+    }
   }
 }

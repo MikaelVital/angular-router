@@ -1,10 +1,18 @@
 <div class="timer-control">
-  <input
-    type="number"
-    [(ngModel)]="intervalTime"
-    placeholder="Digite o tempo em milissegundos"
-  />
-  <button (click)="startTimer()">Iniciar</button>
-  <button (click)="stopTimer()">Parar</button>
-  <p>Contagem atual: {{ count$ | async }}</p>
+  <table *ngIf="bitcoinRates$ | async as bitcoinRates">
+    <thead>
+      <tr>
+        <th>Tempo</th>
+        <th>Taxa USD</th>
+        <th>Taxa BRL</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let rate of bitcoinRates">
+        <td>{{ rate.time }}</td>
+        <td>{{ rate.rateUSD }}</td>
+        <td>{{ rate.rateBRL }}</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
